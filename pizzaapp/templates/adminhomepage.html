@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% block content %}
+<br/>
+	<form method="POST" action= "{% url 'addpizza' %}">
+		{% csrf_token %}
+		<div class="container" style="width: 400px; display: block; margin: auto;">
+			<input type="text" name="pizzaName" class="form-control" style="width: 200px; display: inline; margin: auto;" placeholder="Pizza Name">
+			<input type="text" name="pizzaPrice" class="form-control" style="width: 100px; display: inline; margin: auto;" placeholder="Pizza Price">
+			<input type="submit" name="" style="display: inline;" value="ADD" class="btn btn-success">
+						
+		</div>
+	</form>	
+	<br/> <br/>
+	<table class="table table-striped table-bordered table-hover">
+	  <thead class="thead-dark">
+	    <tr>
+	      <th scope="col">Pizza Name</th>
+	      <th scope="col">Pizza Price</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	{% for pizza in pizzas%}
+		  	<tr>
+		      <th scope="row">{{pizza.pizzaName}}</th>
+		      <td>{{pizza.pizzaPrice}}</td>
+		 
+		    </tr>
+	  	{% endfor %}
+	    
+	  </tbody>
+</table>
+{% endblock%}
