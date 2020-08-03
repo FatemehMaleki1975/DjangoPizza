@@ -50,4 +50,11 @@ def addpizza(request):
 			messages.success(request, ('Pizza has been Added To list!'))
 	return redirect ('adminhomepageview')
 
+def deletepizza(request,pizza_id):
+	pizza = PizzaModel.objects.get(pk=pizza_id)
+	pizza.delete()
+	messages.success(request, ('Pizza has been deleted!'))
+	return redirect('adminhomepageview')
+
+
 	

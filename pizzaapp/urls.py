@@ -7,7 +7,7 @@ urlpatterns = [
     path('authenticatedadmin/',views.authenticatedadmin, name = 'authenticatedadmin'),
     path('logoutadmin/',views.logoutadmin, name = 'logoutadmin'),
     path('addpizza/',views.addpizza, name = 'addpizza'),
-
+	path('deletepizza/<pizza_id>',views.deletepizza, name = 'deletepizza'),
 
 
 ]
