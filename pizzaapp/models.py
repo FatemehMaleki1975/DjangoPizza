@@ -13,3 +13,19 @@ class PizzaModel(models.Model):
 
 	def __str__(self):
 		return self.pizzaName + " | " + self.pizzaPrice
+
+class  CustomerModel(models.Model):
+	userid = models.CharField(max_length =10)
+	phoneno = models.CharField(max_length = 10)		
+
+	def __str__(self):
+		return self.userid + " | " + self.phoneno
+
+class  OrderModel(models.Model):
+	username = models.CharField(max_length =200)
+	phoneno = models.CharField(max_length = 10)
+	address = models.CharField(max_length = 200)
+	ordereditems = models.CharField(max_length =200)		
+
+	def __str__(self):
+		return self.username + " | " + self.phoneno + " | " + self.address + " | " + self.ordereditems
