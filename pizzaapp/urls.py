@@ -16,5 +16,9 @@ urlpatterns = [
 	path('customerpage/',views.customerpage, name = 'customerpage'),
     path('logoutuser/',views.logoutuser, name = 'logoutuser'),
     path('placeorder/',views.placeorder, name = 'placeorder'),
+    path('userorders/',views.userorders, name = 'userorders'),
+    path('allorders/',views.allorders, name = 'allorders'),
+    path('acceptorder/<orderId>',views.acceptorder, name = 'acceptorder'),
+    path('declineorder/<orderId>',views.declineorder, name = 'declineorder'),
 
 ]

@@ -27,6 +27,15 @@
 	        <a class="nav-link" href="/">Link</a>
 	      </li>
 	    </ul>
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'userorders' %}">My Orderes List</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{% url 'allorders' %}"> All Orderes </a>
+	      </li>
+	    </ul>
+
 	    {% if showLogoutButton %}
 	    	{% if isAdmin %}
 			    <form class="form-inline my-2 my-lg-0">

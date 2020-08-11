@@ -25,7 +25,8 @@ class  OrderModel(models.Model):
 	username = models.CharField(max_length =200)
 	phoneno = models.CharField(max_length = 10)
 	address = models.CharField(max_length = 200)
-	ordereditems = models.CharField(max_length =200)		
+	ordereditems = models.CharField(max_length =200)
+	status = models.CharField(max_length = 20)		
 
 	def __str__(self):
-		return self.username + " | " + self.phoneno + " | " + self.address + " | " + self.ordereditems
+		return self.username + " | " + self.phoneno + " | " + self.address + " | " + self.ordereditems + " | " + self.status

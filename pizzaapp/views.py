@@ -41,6 +41,8 @@ def logoutadmin(request):
 	return redirect('adminloginview')
 
 def addpizza(request):
+	if not request.user.is_authenticated :
+		return redirect('userlogin')
 	# name = request.POST['pizzaName']
 	# price = request.POST['pizzaPrice']
 	# PizzaModel(pizzaName = name , pizzaPrice = price).save
@@ -54,6 +56,8 @@ def addpizza(request):
 	return redirect ('adminhomepageview')
 
 def deletepizza(request,pizza_id):
+	if not request.user.is_authenticated :
+		return redirect('userlogin')
 	# PizzaModel.objects.filter(id = pizza_id).delete()
 	pizza = PizzaModel.objects.get(pk=pizza_id)
 	pizza.delete()
@@ -111,6 +115,8 @@ def userauthenticate(request):
 		return redirect('userlogin')
 
 def customerpage(request):
+	if not request.user.is_authenticated :
+		return redirect('userlogin')
 	username = request.user.username
 	showLogoutButton = True
 	isAdmin = False
@@ -122,6 +128,8 @@ def logoutuser(request):
 	return redirect('userlogin')
 
 def placeorder(request):
+	if not request.user.is_authenticated :
+		return redirect('userlogin')
 	username = request.user.username
 	phoneno = CustomerModel.objects.filter(userid = request.user.id )[0].phoneno
 	address = request.POST['address']
@@ -133,7 +141,42 @@ def placeorder(request):
 		price = pizza.pizzaPrice
 		quantity = request.POST.get(str(pizzaid)," ")
 		if str(quantity) != "0" and str(quantity) != " " :
-			ordereditems = ordereditems + "Name : "+ name + " " + "Price : "+ price + " " + "quantity : "+ quantity +"    "
+			ordereditems = ordereditems + "Name : "+ name + " " + "Price : "+ str(int(quantity)*int(price)) + " " + "quantity : "+ quantity +"    "
 	OrderModel(username = username, phoneno = phoneno, address = address, ordereditems = ordereditems).save()
 	messages.success(request,('Order was successfully placed!'))
 	return redirect ('customerpage')
+
+def userorders(request):
+	if not request.user.is_authenticated or request.user.username == "admin" :
+		return redirect ('userlogin')
+	showLogoutButton = True
+	isAdmin = False
+	username = request.user.username	
+	orders = OrderModel.objects.filter(username = username)
+	context = {'orders' : orders, 'username':username, 'showLogoutButton':showLogoutButton, 'isAdmin':isAdmin}
+	return render(request,'userorders.html',context)
+
+def allorders(request):
+	if request.user.username == "admin" :
+		showLogoutButton = True
+		isAdmin = True
+		username = request.user.username	
+		orders = OrderModel.objects.all()
+		context = {'orders' : orders, 'username':username, 'showLogoutButton':showLogoutButton, 'isAdmin':isAdmin}
+		return render(request,'allorders.html',context)	
+	else:
+		return redirect(adminloginview)
+
+def acceptorder(request, orderId):
+	order = OrderModel.objects.filter(id = orderId)[0]
+	order.status ="accepted"
+	order.save()
+	# return redirect(allorders)
+	return redirect(request.META['HTTP_REFERER'])
+
+def declineorder(request,orderId):
+	order = OrderModel.objects.filter(id = orderId)[0]
+	order.status ="declined"
+	order.save()
+	# return redirect(allorders)
+	return redirect(request.META['HTTP_REFERER'])
